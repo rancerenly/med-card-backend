@@ -27,7 +27,8 @@ export class ConsultationService {
   await this.consultsRepository.update(id, consultation);
  }
 
- async remove(id: number): Promise<void> {
-  await this.consultsRepository.delete(id);
+ remove(id: number) {
+  console.log('on deleting??');
+  return this.consultsRepository.delete(id);
  }
 }

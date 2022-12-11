@@ -28,7 +28,7 @@ export class ConsultationController {
     return this.consultationService.update(id, createConsultationDto);
   }
   @Delete(':id')
-  async delete(@Param('id') id: number) {
+  delete(@Param('id') id: number) {
     return this.consultationService.remove(id);
   }
 }
