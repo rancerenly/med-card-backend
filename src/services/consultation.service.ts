@@ -28,7 +28,6 @@ export class ConsultationService {
  }
 
  remove(id: number) {
-  console.log('on deleting??');
   return this.consultsRepository.delete(id);
  }
 }
