@@ -3,6 +3,7 @@ import { Type } from 'class-transformer';
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Consultation } from "../models/consultation.entity";
+import { CreateConsultDtoDto } from "../models/createConsultDto.dto";
 
 @Injectable()
 export class ConsultationService {
@@ -16,13 +17,13 @@ export class ConsultationService {
  }
 
  findOne(id: number): Promise<Consultation> {
-  return this.consultsRepository.findOneBy({ id });
+  return this.consultsRepository.findOneById(id);
  }
 
- create(consultation: Consultation) : Promise<Consultation> {
+ create(consultation: CreateConsultDtoDto) : Promise<CreateConsultDtoDto> {
   return this.consultsRepository.save(consultation);
  }
-  async update(id: number, consultation: Consultation) {
+  async update(id: number, consultation: CreateConsultDtoDto) {
   await this.consultsRepository.update(id, consultation);
  }
 

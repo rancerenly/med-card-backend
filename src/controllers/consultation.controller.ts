@@ -1,38 +1,34 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Req, Res } from "@nestjs/common";
 import { ConsultationService } from "../services/consultation.service";
 import { Consultation } from "../models/consultation.entity";
+import { CreateConsultDtoDto } from "../models/createConsultDto.dto";
 
 @Controller('consultation')
 export class ConsultationController {
-  constructor(private constultService: ConsultationService) {
+  constructor(private readonly consultationService: ConsultationService) {
 
   }
+
   @Get()
-  async fillAll(@Res() res: Response) {
-    const response = await this.constultService.findAll();
-    return response;
+  findAll(@Req() req: Request) {
+    return this.consultationService.findAll();
   }
-
   @Get(":id")
-  async findOne(@Param() id: number, @Res() res: Response) {
-    const response = await this.constultService.findOne(id);
-    return response;
+  findById(@Param() id: number, @Req() req: Request) {
+    return this.consultationService.findOne(id);
   }
 
   @Post()
-  async create(@Body() createConsultationDto: Consultation, @Res() res: Response) {
-    const response = await this.constultService.create(createConsultationDto);
-    return response;
+  async create(@Body() createConsultationDto: CreateConsultDtoDto) {
+    return this.consultationService.create(createConsultationDto);
   }
 
-  @Put()
-  async update(@Param() id: number, @Body() createConsultationDto: Consultation, @Res() res: Response) {
-    const response = await this.constultService.update(id, createConsultationDto);
-    return response;
+  @Put(':id')
+  async update(@Param('id') id: number, @Body() createConsultationDto: CreateConsultDtoDto) {
+    return this.consultationService.update(id, createConsultationDto);
   }
-  @Delete()
-  async delete(@Body() id: number, @Res() res: Response) {
-    const response = await this.constultService.remove(id);
-    return response;
+  @Delete(':id')
+  async delete(@Param('id') id: number) {
+    return this.consultationService.remove(id);
   }
 }
